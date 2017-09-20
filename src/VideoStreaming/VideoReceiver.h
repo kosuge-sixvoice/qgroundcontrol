@@ -57,7 +57,6 @@ public:
     bool            videoRunning    () { return _videoRunning; }
     QString         imageFile       () { return _imageFile; }
     bool            showFullScreen  () { return _showFullScreen; }
-    void            grabImage       (QString imageFile);
 
     void        setShowFullScreen   (bool show) { _showFullScreen = show; emit showFullScreenChanged(); }
 
@@ -78,6 +77,8 @@ public slots:
     void setUri                     (const QString& uri);
     void stopRecording              ();
     void startRecording             ();
+    void            grabImage       (QString imageFile);
+
 
 private slots:
     void _updateTimer               ();

@@ -385,6 +385,7 @@ QGCView {
 
         // Button to start/stop video recording
         Item {
+            id: recordBtn
             z:                  _flightVideoPipControl.z + 1
             anchors.margins:    ScreenTools.defaultFontPixelHeight / 2
             anchors.bottom:     _flightVideo.bottom
@@ -435,6 +436,50 @@ QGCView {
                         } else {
                             _videoReceiver.startRecording()
                         }
+                    }
+                }
+            }
+        }
+
+        // Button to start/stop video recording
+        Item {
+            z:                  _flightVideoPipControl.z + 1
+            anchors.margins:    ScreenTools.defaultFontPixelHeight / 2
+            anchors.bottom:     _flightVideo.bottom
+            anchors.right:      recordBtn.left
+            height:             ScreenTools.defaultFontPixelHeight * 2
+            width:              height
+            visible:            _videoReceiver && _videoReceiver.videoRunning && QGroundControl.settingsManager.videoSettings.showRecControl.rawValue && _flightVideo.visible
+            opacity:            0.75
+
+            readonly property string recordBtnBackground: "BackgroundName"
+
+            Rectangle {
+                id:                 pictureBtnBackground
+                anchors.top:        parent.top
+                anchors.bottom:     parent.bottom
+                width:              height
+                radius:             _recordingVideo ? 0 : height
+                color:              "red"
+            }
+
+            QGCColoredImage {
+                anchors.top:                parent.top
+                anchors.bottom:             parent.bottom
+                anchors.horizontalCenter:   parent.horizontalCenter
+                width:                      height * 0.625
+                sourceSize.width:           width
+                source:                     "/qmlimages/CameraIcon.svg"
+                visible:                    recordBtnBackground.visible
+                fillMode:                   Image.PreserveAspectFit
+                color:                      "white"
+            }
+
+            MouseArea {
+                anchors.fill:   parent
+                onClicked: {
+                    if (_videoReceiver) {
+                        _videoReceiver.grabImage("/home/jack/test.jpg")
                     }
                 }
             }
