@@ -18,7 +18,7 @@ public:
 
     Q_PROPERTY(QmlObjectListModel*  points                  READ points                                             CONSTANT)
     Q_PROPERTY(QString              editorQml               READ editorQml                                          CONSTANT)
-    Q_PROPERTY(QObject*             currentPOI              READ currentP      WRITE setCurrentPOI  NOTIFY currentPOIChanged)
+    Q_PROPERTY(QObject*             currentPOI              READ currentPOI      WRITE setCurrentPOI  NOTIFY currentPOIChanged)
 
     Q_INVOKABLE void addPoint(QGeoCoordinate point);
     Q_INVOKABLE void removePoint(QObject* point);
@@ -41,9 +41,6 @@ signals:
     void loadComplete(void);
 
 private slots:
-    void _managerLoadComplete(const QList<QGeoCoordinate> rgPoints);
-    void _managerSendComplete(bool error);
-    void _managerRemoveAllComplete(bool error);
     void _setFirstPointCurrent(void);
     void _updateContainsItems(void);
 
