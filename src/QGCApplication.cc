@@ -32,7 +32,7 @@
 #include <QDebug>
 
 #include "VideoStreaming.h"
-
+#include "PointOfInterestController.h"
 #include "QGC.h"
 #include "QGCApplication.h"
 #include "GAudioOutput.h"

@@ -1,5 +1,6 @@
 #ifndef POINTOFINTERESTCONTROLLER_H
 #define POINTOFINTERESTCONTROLLER_H
+
 #include "PlanElementController.h"
 #include "RallyPointManager.h"
 #include "Vehicle.h"

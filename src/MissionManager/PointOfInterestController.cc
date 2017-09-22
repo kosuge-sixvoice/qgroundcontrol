@@ -1,4 +1,4 @@
-#include "RallyPointController.h"
+#include "PointOfInterestController.h"
 #include "RallyPoint.h"
 #include "Vehicle.h"
 #include "FirmwarePlugin.h"
@@ -24,14 +24,14 @@ QGC_LOGGING_CATEGORY(PointOfInterestController, "PointOfInterestControllerLog")
 const char* PointOfInterestController::_jsonFileTypeValue =  "PointsOfInterest";
 const char* PointOfInterestController::_jsonPointsKey =      "points";
 
-PointOfInterestController::RallyPointController(PlanMasterController* masterController, QObject* parent)
+PointOfInterestController::PointOfInterestController(PlanMasterController* masterController, QObject* parent)
     : PlanElementController(masterController, parent)
     , _currentRallyPoint(NULL)
 {
     connect(&_points, &QmlObjectListModel::countChanged, this, &PointOfInterestController::_updateContainsItems);
 }
 
-PointOfInterestController::~RallyPointController()
+PointOfInterestController::~PointOfInterestController()
 {
 
 }
@@ -82,7 +82,7 @@ void PointOfInterestController::save(QJsonObject& json)
 void PointOfInterestController::removeAll(void)
 {
     _points.clearAndDeleteContents();
-    setCurrentRallyPoint(NULL);
+    setCurrentPOI(NULL);
 }
 
 QString PointOfInterestController::editorQml(void) const
@@ -101,7 +101,7 @@ void PointOfInterestController::addPoint(QGeoCoordinate point)
     point.setAltitude(defaultAlt);
     RallyPoint* newPoint = new RallyPoint(point, this);
     _points.append(newPoint);
-    setCurrentRallyPoint(newPoint);
+    setCurrentPOI(newPoint);
 }
 
 void PointOfInterestController::removePoint(QObject* rallyPoint)
@@ -117,23 +117,23 @@ void PointOfInterestController::removePoint(QObject* rallyPoint)
     if (_points.count()) {
         int newIndex = qMin(foundIndex, _points.count() - 1);
         newIndex = qMax(newIndex, 0);
-        setCurrentRallyPoint(_points[newIndex]);
+        setCurrentPOI(_points[newIndex]);
     } else {
-        setCurrentRallyPoint(NULL);
+        setCurrentPOI(NULL);
     }
 }
 
-void PointOfInterestController::setCurrentRallyPoint(QObject* rallyPoint)
+void PointOfInterestController::setCurrentPOI(QObject* rallyPoint)
 {
     if (_currentRallyPoint != rallyPoint) {
         _currentRallyPoint = rallyPoint;
-        emit currentRallyPointChanged(rallyPoint);
+        emit currentPOIChanged(rallyPoint);
     }
 }
 
 void PointOfInterestController::_setFirstPointCurrent(void)
 {
-    setCurrentRallyPoint(_points.count() ? _points[0] : NULL);
+    setCurrentPOI(_points.count() ? _points[0] : NULL);
 }
 
 bool PointOfInterestController::containsItems(void) const
