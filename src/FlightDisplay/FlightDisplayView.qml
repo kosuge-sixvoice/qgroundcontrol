@@ -103,6 +103,11 @@ QGCView {
         Component.onCompleted:  start(false /* editMode */)
     }
 
+    PointOfInterestController {
+        id: poiController
+        Component.onCompleted: console.log("poi controller init ok")
+    }
+
     Connections {
         target:                     _missionController
         onResumeMissionReady:       guidedActionsController.confirmAction(guidedActionsController.actionResumeMissionReady)

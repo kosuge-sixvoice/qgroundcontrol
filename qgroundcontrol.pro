@@ -391,11 +391,13 @@ HEADERS += \
     src/api/QGCCorePlugin.h \
     src/api/QGCOptions.h \
     src/api/QGCSettings.h \
+    src/MissionManager/PointOfInterestController.h
 
 SOURCES += \
     src/api/QGCCorePlugin.cc \
     src/api/QGCOptions.cc \
     src/api/QGCSettings.cc \
+    src/MissionManager/PointOfInterestController.cc
 
 #
 # Unit Test specific configuration goes here (requires full debug build with all plugins)
