@@ -216,6 +216,13 @@ FlightMap {
         homePosition:           _activeVehicle && _activeVehicle.homePosition.isValid ? _activeVehicle.homePosition : undefined
     }
 
+    PointOfInterestMapVisuals {
+        map:                    flightMap
+        myPOIController:   _poiController
+        interactive:            false
+        planView:               false
+    }
+
     // Rally points on map
     MapItemView {
         model: _rallyPointController.points

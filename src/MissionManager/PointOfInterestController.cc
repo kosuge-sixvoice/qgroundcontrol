@@ -19,7 +19,7 @@
 #include <QJsonDocument>
 #include <QJsonArray>
 
-QGC_LOGGING_CATEGORY(PointOfInterestController, "PointOfInterestControllerLog")
+QGC_LOGGING_CATEGORY(PointOfInterestControllerLog, "PointOfInterestControllerLog")
 
 const char* PointOfInterestController::_jsonFileTypeValue =  "PointsOfInterest";
 const char* PointOfInterestController::_jsonPointsKey =      "points";
@@ -85,6 +85,8 @@ void PointOfInterestController::removeAll(void)
 
 void PointOfInterestController::addPoint(QGeoCoordinate point)
 {
+    qCDebug(PointOfInterestControllerLog) << "addPoint:" << point;
+
     double defaultAlt;
     if (_points.count()) {
         defaultAlt = qobject_cast<RallyPoint*>(_points[_points.count() - 1])->coordinate().altitude();
@@ -94,6 +96,7 @@ void PointOfInterestController::addPoint(QGeoCoordinate point)
     point.setAltitude(defaultAlt);
     RallyPoint* newPoint = new RallyPoint(point, this);
     _points.append(newPoint);
+    qCDebug(PointOfInterestControllerLog) << "_points:" << _points.count();
     setCurrentPOI(newPoint);
 }
 

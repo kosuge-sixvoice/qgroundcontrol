@@ -711,7 +711,6 @@ QGCView {
             coordinate.longitude = coordinate.longitude.toFixed(4)
             coordinate.altitude = coordinate.altitude.toFixed(4)
             _poiController.addPoint(coordinate)
-            console.log("hey")
         }
     }
 }
