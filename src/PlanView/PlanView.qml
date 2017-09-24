@@ -56,6 +56,7 @@ QGCView {
     readonly property int       _layerMission:              1
     readonly property int       _layerGeoFence:             2
     readonly property int       _layerRallyPoints:          3
+    readonly property int       _layerPOI:                  4
     readonly property string    _armedVehicleUploadPrompt:  qsTr("Vehicle is currently armed. Do you want to upload the mission to the vehicle?")
 
     Component.onCompleted: {

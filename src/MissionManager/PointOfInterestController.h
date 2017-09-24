@@ -1,19 +1,18 @@
 #ifndef POINTOFINTERESTCONTROLLER_H
 #define POINTOFINTERESTCONTROLLER_H
 
-#include "PlanElementController.h"
 #include "RallyPointManager.h"
 #include "Vehicle.h"
 #include "MultiVehicleManager.h"
 #include "QGCLoggingCategory.h"
 #include "QmlObjectListModel.h"
 
-class PointOfInterestController : public PlanElementController
+class PointOfInterestController : public QObject
 {
     Q_OBJECT
 
 public:
-    PointOfInterestController(PlanMasterController* masterController, QObject* parent = NULL);
+    PointOfInterestController(QObject* parent = NULL);
     ~PointOfInterestController();
 
     Q_PROPERTY(QmlObjectListModel*  points                  READ points                                             CONSTANT)
@@ -23,20 +22,20 @@ public:
     Q_INVOKABLE void addPoint(QGeoCoordinate point);
     Q_INVOKABLE void removePoint(QObject* point);
 
-    void save                       (QJsonObject& json) final;
-    bool load                       (const QJsonObject& json, QString& errorString) final;
-    void removeAll                  (void) final;
+    void save                       (QJsonObject& json);
+    bool load                       (const QJsonObject& json, QString& errorString);
+    void removeAll                  (void);
 
-    bool containsItems              (void) const final;
+    bool containsItems              (void) const;
 
     QmlObjectListModel* points           (void) { return &_points; }
-    QString             editorQml        (void) const;
-    QObject*            currentPOI       (void) const { return _currentRallyPoint; }
+    QString             editorQml        (void) const { return QStringLiteral("qrc:/FirmwarePlugin/RallyPointEditor.qml"); }
+    QObject*            currentPOI       (void) const { return _currentPOI; }
 
     void setCurrentPOI(QObject* rallyPoint);
 
 signals:
-    void rallyPointsSupportedChanged(bool rallyPointsSupported);
+     void containsItemsChanged(bool containsItems);
     void currentPOIChanged(QObject* rallyPoint);
     void loadComplete(void);
 
@@ -45,11 +44,8 @@ private slots:
     void _updateContainsItems(void);
 
 private:
-    RallyPointManager*  _rallyPointManager;
-    bool                _dirty;
     QmlObjectListModel  _points;
-    QObject*            _currentRallyPoint;
-    bool                _itemsRequested;
+    QObject*            _currentPOI;
 
     static const char* _jsonFileTypeValue;
     static const char* _jsonPointsKey;

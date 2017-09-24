@@ -24,9 +24,8 @@ QGC_LOGGING_CATEGORY(PointOfInterestController, "PointOfInterestControllerLog")
 const char* PointOfInterestController::_jsonFileTypeValue =  "PointsOfInterest";
 const char* PointOfInterestController::_jsonPointsKey =      "points";
 
-PointOfInterestController::PointOfInterestController(PlanMasterController* masterController, QObject* parent)
-    : PlanElementController(masterController, parent)
-    , _currentRallyPoint(NULL)
+PointOfInterestController::PointOfInterestController(QObject* parent)
+    : _currentPOI(NULL)
 {
     connect(&_points, &QmlObjectListModel::countChanged, this, &PointOfInterestController::_updateContainsItems);
 }
@@ -60,7 +59,6 @@ bool PointOfInterestController::load(const QJsonObject& json, QString& errorStri
     }
     _points.swapObjectList(pointList);
 
-    setDirty(false);
     _setFirstPointCurrent();
 
     return true;
@@ -83,11 +81,6 @@ void PointOfInterestController::removeAll(void)
 {
     _points.clearAndDeleteContents();
     setCurrentPOI(NULL);
-}
-
-QString PointOfInterestController::editorQml(void) const
-{
-    return _rallyPointManager->editorQml();
 }
 
 void PointOfInterestController::addPoint(QGeoCoordinate point)
@@ -125,8 +118,8 @@ void PointOfInterestController::removePoint(QObject* rallyPoint)
 
 void PointOfInterestController::setCurrentPOI(QObject* rallyPoint)
 {
-    if (_currentRallyPoint != rallyPoint) {
-        _currentRallyPoint = rallyPoint;
+    if (_currentPOI != rallyPoint) {
+        _currentPOI = rallyPoint;
         emit currentPOIChanged(rallyPoint);
     }
 }

@@ -38,6 +38,7 @@ QGCView {
 
     property bool activeVehicleJoystickEnabled: _activeVehicle ? _activeVehicle.joystickEnabled : false
 
+    property var    _poiController:         poiController
     property var    _planMasterController:  masterController
     property var    _missionController:     _planMasterController.missionController
     property var    _geoFenceController:    _planMasterController.geoFenceController
@@ -105,7 +106,7 @@ QGCView {
 
     PointOfInterestController {
         id: poiController
-        Component.onCompleted: console.log("poi controller init ok")
+        Component.onCompleted: start(false)
     }
 
     Connections {
@@ -699,6 +700,18 @@ QGCView {
             width:              ScreenTools.defaultFontPixelWidth * 10
             color:              qgcPal.window
             visible:            false
+        }
+    }
+
+    MouseArea {
+        anchors.fill: parent
+        onClicked: {
+            var coordinate = _flightMap.toCoordinate(Qt.point(mouse.x, mouse.y), false /* clipToViewPort */)
+            coordinate.latitude = coordinate.latitude.toFixed(4)
+            coordinate.longitude = coordinate.longitude.toFixed(4)
+            coordinate.altitude = coordinate.altitude.toFixed(4)
+            _poiController.addPoint(coordinate)
+            console.log("hey")
         }
     }
 }
