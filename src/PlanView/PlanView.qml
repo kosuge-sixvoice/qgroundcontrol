@@ -340,9 +340,7 @@ QGCView {
                             _rallyPointController.addPoint(coordinate)
                         }
                         break
-//                    case _layerPOIPoints:
-//                        _poiController.addPoint(coordinate)
-//                    }
+                    }
                 }
             }
 

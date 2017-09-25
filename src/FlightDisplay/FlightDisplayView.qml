@@ -256,6 +256,16 @@ QGCView {
                 rightPanelWidth:            ScreenTools.defaultFontPixelHeight * 9
                 qgcView:                    root
                 scaleState:                 (_mainIsMap && flyViewOverlay.item) ? (flyViewOverlay.item.scaleState ? flyViewOverlay.item.scaleState : "bottomMode") : "bottomMode"
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        var coordinate = _flightMap.toCoordinate(Qt.point(mouse.x, mouse.y), false /* clipToViewPort */)
+                        coordinate.latitude = coordinate.latitude.toFixed(4)
+                        coordinate.longitude = coordinate.longitude.toFixed(4)
+                        coordinate.altitude = coordinate.altitude.toFixed(4)
+                        _poiController.addPoint(coordinate)
+                    }
+                }
             }
         }
 
@@ -700,17 +710,6 @@ QGCView {
             width:              ScreenTools.defaultFontPixelWidth * 10
             color:              qgcPal.window
             visible:            false
-        }
-    }
-
-    MouseArea {
-        anchors.fill: parent
-        onClicked: {
-            var coordinate = _flightMap.toCoordinate(Qt.point(mouse.x, mouse.y), false /* clipToViewPort */)
-            coordinate.latitude = coordinate.latitude.toFixed(4)
-            coordinate.longitude = coordinate.longitude.toFixed(4)
-            coordinate.altitude = coordinate.altitude.toFixed(4)
-            _poiController.addPoint(coordinate)
         }
     }
 }
