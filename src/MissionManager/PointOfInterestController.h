@@ -22,9 +22,12 @@ public:
     Q_INVOKABLE void addPoint(QGeoCoordinate point);
     Q_INVOKABLE void removePoint(QObject* point);
 
-    void save                       (QJsonObject& json);
-    bool load                       (const QJsonObject& json, QString& errorString);
-    void removeAll                  (void);
+    Q_INVOKABLE void save                       (const QString& filename);
+    Q_INVOKABLE void load                       (const QString& filename);
+    Q_INVOKABLE void removeAll                  (void);
+
+    bool loadJson(const QJsonObject& json, QString& errorString);
+
 
     bool containsItems              (void) const;
 

@@ -266,6 +266,18 @@ QGCView {
                         _poiController.addPoint(coordinate)
                     }
                 }
+                TextArea {
+                    anchors.fill: parent
+                    visible: false
+                    focus: true
+                    Keys.onPressed: {
+                        console.log("pressed")
+                        if (event.matches(StandardKey.Undo))
+                            console.log("undo")
+                        else if (event.matches(StandardKey.Redo))
+                            console.log("redo")
+                    }
+                }
             }
         }
 
@@ -459,6 +471,7 @@ QGCView {
 
         // Button to start/stop video recording
         Item {
+            id: pictureButton
             z:                  _flightVideoPipControl.z + 1
             anchors.margins:    ScreenTools.defaultFontPixelHeight / 2
             anchors.bottom:     _flightVideo.bottom
@@ -500,6 +513,62 @@ QGCView {
                 }
             }
         }
+
+        QGCButton {
+            id: saveButton
+            z:                  _flightVideoPipControl.z + 1
+            anchors.margins:    ScreenTools.defaultFontPixelHeight / 2
+            anchors.bottom:     _flightVideo.bottom
+            anchors.right:      pictureButton.left
+            height:             ScreenTools.defaultFontPixelHeight * 2
+            width:              height
+            opacity:            0.75
+
+            readonly property string recordBtnBackground: "BackgroundName"
+            onClicked: {
+                console.log("save")
+                _poiController.save('/home/jack/example.json')
+            }
+
+        }
+
+        QGCButton {
+            id: loadButton
+            z:                  _flightVideoPipControl.z + 1
+            anchors.margins:    ScreenTools.defaultFontPixelHeight / 2
+            anchors.bottom:     _flightVideo.bottom
+            anchors.right:      saveButton.left
+            height:             ScreenTools.defaultFontPixelHeight * 2
+            width:              height
+            opacity:            0.75
+
+            readonly property string recordBtnBackground: "BackgroundName"
+            onClicked: {
+                console.log("load")
+                _poiController.load('/home/jack/example.json')
+            }
+
+        }
+
+        QGCButton {
+            id: removeButton
+            z:                  _flightVideoPipControl.z + 1
+            anchors.margins:    ScreenTools.defaultFontPixelHeight / 2
+            anchors.bottom:     _flightVideo.bottom
+            anchors.right:      loadButton.left
+            height:             ScreenTools.defaultFontPixelHeight * 2
+            width:              height
+            opacity:            0.75
+
+            readonly property string recordBtnBackground: "BackgroundName"
+            onClicked: {
+                console.log("remove")
+                _poiController.removeAll()
+            }
+
+        }
+
+
 
         MultiVehicleList {
             anchors.margins:    _margins

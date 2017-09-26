@@ -35,7 +35,52 @@ PointOfInterestController::~PointOfInterestController()
 
 }
 
-bool PointOfInterestController::load(const QJsonObject& json, QString& errorString)
+void PointOfInterestController::load(const QString& filename)
+{
+    QString errorString;
+    QString errorMessage = tr("Error reading Plan file (%1). %2").arg(filename).arg("%1");
+
+    if (filename.isEmpty()) {
+        return;
+    }
+
+    QFile file(filename);
+
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        errorString = file.errorString() + QStringLiteral(" ") + filename;
+        qgcApp()->showMessage(errorMessage.arg(errorString));
+        return;
+    }
+
+    QString fileExtension(".%1");
+        QJsonDocument   jsonDoc;
+        QByteArray      bytes = file.readAll();
+
+        if (!JsonHelper::isJsonFile(bytes, jsonDoc, errorString)) {
+            qgcApp()->showMessage(errorMessage.arg(errorString));
+            return;
+        }
+
+        int version;
+        QJsonObject json = jsonDoc.object();
+//        if (!JsonHelper::validateQGCJsonFile(json, _planFileType, _planFileVersion, _planFileVersion, version, errorString)) {
+//            qgcApp()->showMessage(errorMessage.arg(errorString));
+//            return;
+//        }
+
+//        QList<JsonHelper::KeyValidateInfo> rgKeyInfo = { _jsonPOIObjectKey, QJsonValue::Object, true };
+
+//        if (!JsonHelper::validateKeys(json, rgKeyInfo, errorString)) {
+//            qgcApp()->showMessage(errorMessage.arg(errorString));
+//            return;
+//        }
+
+        if (!loadJson(json, errorString)) {
+            qgcApp()->showMessage(errorMessage.arg(errorString));
+        }
+}
+
+bool PointOfInterestController::loadJson(const QJsonObject& json, QString& errorString)
 {
     QString errorStr;
     QString errorMessage = tr("Rally: %1");
@@ -64,17 +109,41 @@ bool PointOfInterestController::load(const QJsonObject& json, QString& errorStri
     return true;
 }
 
-void PointOfInterestController::save(QJsonObject& json)
+void PointOfInterestController::save(const QString& filename)
 {
-    json[JsonHelper::jsonVersionKey] = 1;
-
-    QJsonArray rgPoints;
-    QJsonValue jsonPoint;
-    for (int i=0; i<_points.count(); i++) {
-        JsonHelper::saveGeoCoordinate(qobject_cast<RallyPoint*>(_points[i])->coordinate(), true /* writeAltitude */, jsonPoint);
-        rgPoints.append(jsonPoint);
+    if (filename.isEmpty()) {
+        return;
     }
-    json[_jsonPointsKey] = QJsonValue(rgPoints);
+
+    QString planFilename = filename;
+//    if (!QFileInfo(filename).fileName().contains(".")) {
+//        planFilename += QString(".%1").arg(fileExtension());
+//    }
+
+    QFile file(planFilename);
+
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        qgcApp()->showMessage(tr("Plan save error %1 : %2").arg(filename).arg(file.errorString()));
+    } else {
+        QJsonObject json;
+
+
+        //JsonHelper::saveQGCJsonFileHeader(planJson, _planFileType, _planFileVersion);
+
+
+        json[JsonHelper::jsonVersionKey] = 1;
+
+        QJsonArray rgPoints;
+        QJsonValue jsonPoint;
+        for (int i=0; i<_points.count(); i++) {
+            JsonHelper::saveGeoCoordinate(qobject_cast<RallyPoint*>(_points[i])->coordinate(), true /* writeAltitude */, jsonPoint);
+            rgPoints.append(jsonPoint);
+        }
+        json[_jsonPointsKey] = QJsonValue(rgPoints);
+
+        QJsonDocument saveDoc(json);
+        file.write(saveDoc.toJson());
+    }
 }
 
 void PointOfInterestController::removeAll(void)
