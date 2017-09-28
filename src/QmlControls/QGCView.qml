@@ -180,7 +180,8 @@ FactPanel {
         }
     }
 
-    Component.onCompleted:  _signalCompleted()
+    Component.onCompleted:  {_signalCompleted()
+}
     onWidthChanged:         _signalCompleted()
     onHeightChanged:        _signalCompleted()
 
@@ -189,6 +190,7 @@ FactPanel {
 
         onHideDialog: _rootItem.hideDialog()
     }
+
 
     Item {
         id:             _dialogOverlay

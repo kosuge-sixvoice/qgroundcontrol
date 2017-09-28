@@ -42,6 +42,7 @@ QGCTextField {
             fact.value = text
             fact.valueChanged(fact.value)
         }
+        mainWindow.forceActiveFocus()
     }
 
     onHelpClicked: qgcView.showDialog(helpDialogComponent, qsTr("Value Details"), qgcView.showDialogDefaultWidth, StandardButton.Save | StandardButton.Cancel)

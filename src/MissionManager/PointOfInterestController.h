@@ -6,6 +6,7 @@
 #include "MultiVehicleManager.h"
 #include "QGCLoggingCategory.h"
 #include "QmlObjectListModel.h"
+#include <QKeyEvent>
 
 class PointOfInterestController : public QObject
 {

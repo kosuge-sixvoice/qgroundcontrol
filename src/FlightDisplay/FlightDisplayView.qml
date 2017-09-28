@@ -16,6 +16,7 @@ import QtLocation               5.3
 import QtPositioning            5.3
 import QtMultimedia             5.5
 import QtQuick.Layouts          1.2
+import QtQml 2.2
 
 import QGroundControl               1.0
 import QGroundControl.FlightDisplay 1.0
@@ -31,6 +32,44 @@ import QGroundControl.FactSystem    1.0
 QGCView {
     id:             root
     viewPanel:      _panel
+
+    function markCurrentVehiclePositionPOI() {
+        if (!visible) {
+            console.log("you can't see me!")
+            return
+        }
+        if (!_activeVehicle) {
+            console.log("no active vehicle!")
+            return
+        }
+
+
+
+        var latitude = _activeVehicle.latitude
+        var longitude = _activeVehicle.longitude
+        var altitude = _activeVehicle.altitudeRelative
+        var coordinate = QtPositioning.coordinate(latitude, longitude, altitude)
+        _poiController.addPoint(coordinate)
+    }
+
+    function markCurrentMousePositionPOI() {
+        if (!visible) {
+            console.log("you can't see me!")
+            return
+        }
+
+//        property var currentDate: new Date()
+
+//        console.log(currentDate.toString())
+
+        console.log(_fmma.mouseX, _fmma.mouseY)
+        var coordinate = _flightMap.toCoordinate(Qt.point(_fmma.mouseX, _fmma.mouseY), false /* clipToViewPort */)
+        console.log(coordinate)
+        coordinate.latitude = coordinate.latitude.toFixed(4)
+        coordinate.longitude = coordinate.longitude.toFixed(4)
+        coordinate.altitude = coordinate.altitude.toFixed(4)
+        _poiController.addPoint(coordinate)
+    }
 
     QGCPalette { id: qgcPal; colorGroupEnabled: enabled }
 
@@ -220,6 +259,8 @@ QGCView {
         id:             _panel
         anchors.fill:   parent
 
+
+
         //-- Map View
         //   For whatever reason, if FlightDisplayViewMap is the _panel item, changing
         //   width/height has no effect.
@@ -231,6 +272,7 @@ QGCView {
             visible:        _mainIsMap || _isPipVisible
             width:          _mainIsMap ? _panel.width  : _pipSize
             height:         _mainIsMap ? _panel.height : _pipSize * (9/16)
+
             states: [
                 State {
                     name:   "pipMode"
@@ -247,6 +289,7 @@ QGCView {
                     }
                 }
             ]
+
             FlightDisplayViewMap {
                 id:                         _flightMap
                 anchors.fill:               parent
@@ -257,9 +300,13 @@ QGCView {
                 qgcView:                    root
                 scaleState:                 (_mainIsMap && flyViewOverlay.item) ? (flyViewOverlay.item.scaleState ? flyViewOverlay.item.scaleState : "bottomMode") : "bottomMode"
                 MouseArea {
+                    id: _fmma
                     anchors.fill: parent
+                    hoverEnabled: true
                     onClicked: {
                         var coordinate = _flightMap.toCoordinate(Qt.point(mouse.x, mouse.y), false /* clipToViewPort */)
+                        console.log(mouse.x, mouse.y)
+                        console.log(coordinate)
                         coordinate.latitude = coordinate.latitude.toFixed(4)
                         coordinate.longitude = coordinate.longitude.toFixed(4)
                         coordinate.altitude = coordinate.altitude.toFixed(4)

@@ -24,6 +24,21 @@ import QGroundControl.MultiVehicleManager   1.0
 Item {
     id: mainWindow
 
+    Component.onCompleted: {
+        mainWindow.forceActiveFocus()
+    }
+
+    Keys.onPressed: {
+        console.log("Yo")
+        if (event.key == Qt.Key_T) {
+            console.log("key pressed")
+            flightView.markCurrentVehiclePositionPOI()
+        } else if (event.key == Qt.Key_R) {
+            console.log("R pressed")
+            flightView.markCurrentMousePositionPOI()
+        }
+    }
+
     signal reallyClose
 
     QGCPalette { id: qgcPal; colorGroupEnabled: true }
