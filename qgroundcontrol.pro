@@ -512,6 +512,7 @@ HEADERS += \
     src/MissionManager/MissionSettingsItem.h \
     src/MissionManager/PlanElementController.h \
     src/MissionManager/PlanMasterController.h \
+    src/MissionManager/PointOfInterest.h \
     src/MissionManager/QGCMapPolygon.h \
     src/MissionManager/RallyPoint.h \
     src/MissionManager/RallyPointController.h \

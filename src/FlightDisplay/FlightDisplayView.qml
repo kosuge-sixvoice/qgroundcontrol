@@ -43,13 +43,21 @@ QGCView {
             return
         }
 
+        var date = new Date()
 
+        console.log(date.toLocaleString())
+        var pictureName = ""
+
+        if (_videoReceiver) {
+            pictureName = "/home/jack/" + date.toLocaleString() + ".jpg"
+            _videoReceiver.grabImage(pictureName)
+        }
 
         var latitude = _activeVehicle.latitude
         var longitude = _activeVehicle.longitude
         var altitude = _activeVehicle.altitudeRelative
         var coordinate = QtPositioning.coordinate(latitude, longitude, altitude)
-        _poiController.addPoint(coordinate)
+        _poiController.addPoint(coordinate, pictureName)
     }
 
     function markCurrentMousePositionPOI() {
@@ -61,6 +69,14 @@ QGCView {
 //        property var currentDate: new Date()
 
 //        console.log(currentDate.toString())
+        var date = new Date()
+
+        console.log(date.toLocaleString())
+
+        if (_videoReceiver) {
+            _videoReceiver.grabImage("/home/jack/" + date.toLocaleString() + ".jpg")
+        }
+
 
         console.log(_fmma.mouseX, _fmma.mouseY)
         var coordinate = _flightMap.toCoordinate(Qt.point(_fmma.mouseX, _fmma.mouseY), false /* clipToViewPort */)

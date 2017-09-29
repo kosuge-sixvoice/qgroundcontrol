@@ -1,5 +1,5 @@
 #include "PointOfInterestController.h"
-#include "RallyPoint.h"
+#include "PointOfInterest.h"
 #include "Vehicle.h"
 #include "FirmwarePlugin.h"
 #include "MAVLinkProtocol.h"
@@ -92,19 +92,23 @@ bool PointOfInterestController::loadJson(const QJsonObject& json, QString& error
         return false;
     }
 
-    QList<QGeoCoordinate> rgPoints;
-    if (!JsonHelper::loadGeoCoordinateArray(json[_jsonPointsKey], true /* altitudeRequired */, rgPoints, errorStr)) {
-        errorString = errorMessage.arg(errorStr);
-        return false;
-    }
-    _points.clearAndDeleteContents();
-    QObjectList pointList;
-    for (int i=0; i<rgPoints.count(); i++) {
-        pointList.append(new RallyPoint(rgPoints[i], this));
-    }
-    _points.swapObjectList(pointList);
+    const QJsonArray rgMissionItems(json[_jsonPointsKey].toArray());
 
-    _setFirstPointCurrent();
+
+
+//    QList<QGeoCoordinate> rgPoints;
+//    if (!JsonHelper::loadGeoCoordinateArray(json[_jsonPointsKey], true /* altitudeRequired */, rgPoints, errorStr)) {
+//        errorString = errorMessage.arg(errorStr);
+//        return false;
+//    }
+//    _points.clearAndDeleteContents();
+//    QObjectList pointList;
+//    for (int i=0; i<rgPoints.count(); i++) {
+//        pointList.append(new PointOfInterest(rgPoints[i], this));
+//    }
+//    _points.swapObjectList(pointList);
+
+//    _setFirstPointCurrent();
 
     return true;
 }
@@ -136,7 +140,7 @@ void PointOfInterestController::save(const QString& filename)
         QJsonArray rgPoints;
         QJsonValue jsonPoint;
         for (int i=0; i<_points.count(); i++) {
-            JsonHelper::saveGeoCoordinate(qobject_cast<RallyPoint*>(_points[i])->coordinate(), true /* writeAltitude */, jsonPoint);
+            JsonHelper::saveGeoCoordinate(qobject_cast<PointOfInterest*>(_points[i])->coordinate(), true /* writeAltitude */, jsonPoint);
             rgPoints.append(jsonPoint);
         }
         json[_jsonPointsKey] = QJsonValue(rgPoints);
@@ -152,18 +156,18 @@ void PointOfInterestController::removeAll(void)
     setCurrentPOI(NULL);
 }
 
-void PointOfInterestController::addPoint(QGeoCoordinate point)
+void PointOfInterestController::addPoint(QGeoCoordinate point, QString& pictureName)
 {
     qCDebug(PointOfInterestControllerLog) << "addPoint:" << point;
 
     double defaultAlt;
     if (_points.count()) {
-        defaultAlt = qobject_cast<RallyPoint*>(_points[_points.count() - 1])->coordinate().altitude();
+        defaultAlt = qobject_cast<PointOfInterest*>(_points[_points.count() - 1])->coordinate().altitude();
     } else {
         defaultAlt = qgcApp()->toolbox()->settingsManager()->appSettings()->defaultMissionItemAltitude()->rawValue().toDouble();
     }
     point.setAltitude(defaultAlt);
-    RallyPoint* newPoint = new RallyPoint(point, this);
+    PointOfInterest* newPoint = new PointOfInterest(point, pictureName, this);
     _points.append(newPoint);
     qCDebug(PointOfInterestControllerLog) << "_points:" << _points.count();
     setCurrentPOI(newPoint);

@@ -20,7 +20,7 @@ public:
     Q_PROPERTY(QString              editorQml               READ editorQml                                          CONSTANT)
     Q_PROPERTY(QObject*             currentPOI              READ currentPOI      WRITE setCurrentPOI  NOTIFY currentPOIChanged)
 
-    Q_INVOKABLE void addPoint(QGeoCoordinate point);
+    Q_INVOKABLE void addPoint(QGeoCoordinate point, QString& pictureName);
     Q_INVOKABLE void removePoint(QObject* point);
 
     Q_INVOKABLE void save                       (const QString& filename);
