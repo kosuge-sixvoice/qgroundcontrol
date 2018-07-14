@@ -6,12 +6,14 @@
     <message>
         <location filename="../src/AutoPilotPlugins/APM/APMAirframeComponent.qml" line="129"/>
         <location filename="../src/AutoPilotPlugins/APM/APMAirframeComponent.qml" line="172"/>
-        <source>Select your drone to load the default parameters for it. </source>
+        <source>既定の情報をロードするためにドローンを選んでください
+            Select your drone to load the default parameters for it. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/AutoPilotPlugins/APM/APMAirframeComponent.qml" line="219"/>
-        <source>Please select your airframe type</source>
+        <source>あなたの機体の種類を選択してください
+            Please select your airframe type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -19,7 +21,8 @@
         <location filename="../src/AutoPilotPlugins/APM/APMAirframeComponent.qml" line="225"/>
         <location filename="../src/AutoPilotPlugins/APM/APMAirframeComponent.qml" line="277"/>
         <location filename="../src/AutoPilotPlugins/APM/APMAirframeComponent.qml" line="278"/>
-        <source>Load common parameters</source>
+        <source>通常設定を読み込みます
+            Load common parameters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -34,7 +37,8 @@
     </message>
     <message>
         <location filename="../src/AutoPilotPlugins/APM/APMAirframeComponent.cc" line="46"/>
-        <source>Airframe Setup is used to select the airframe which matches your vehicle. You can also the load default parameter values associated with known vehicle types.</source>
+        <source>機体のセットアップは機体に合った設定を選べます。ほかの機体に使われている既定のパラメーター値を代わりに使うこともできます。
+            Airframe Setup is used to select the airframe which matches your vehicle. You can also the load default parameter values associated with known vehicle types.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -221,7 +225,8 @@
     </message>
     <message>
         <location filename="../src/AutoPilotPlugins/APM/APMCameraComponent.cc" line="32"/>
-        <source>Camera setup is used to adjust camera and gimbal settings.</source>
+        <source>カメラのセットアップはカメラと回転台の調節をすることができます
+            Camera setup is used to adjust camera and gimbal settings.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -252,7 +257,8 @@
     <name>APMFirmwarePlugin</name>
     <message>
         <location filename="../src/FirmwarePlugin/APM/APMFirmwarePlugin.cc" line="746"/>
-        <source>Error during Solo video link setup: %1</source>
+        <source>エラー：ビデオをつないでいる途中です
+            Error during Solo video link setup: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -461,7 +467,8 @@
     </message>
     <message>
         <location filename="../src/AutoPilotPlugins/APM/APMLightsComponent.cc" line="33"/>
-        <source>Lights setup is used to adjust light output channels.</source>
+        <source>ライトセットアップは光の調節に使えます
+            Lights setup is used to adjust light output channels.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
