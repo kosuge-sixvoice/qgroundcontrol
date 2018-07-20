@@ -467,7 +467,7 @@
     </message>
     <message>
         <location filename="../src/AutoPilotPlugins/APM/APMLightsComponent.cc" line="33"/>
-        <source>ライトセットアップは光の調節に使えます
+        <source>ライトセットアップは光の調節に使うことができます
             Lights setup is used to adjust light output channels.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -940,12 +940,12 @@
     </message>
     <message>
         <location filename="../src/AutoPilotPlugins/APM/APMSafetyComponentSub.qml" line="278"/>
-        <source>Internal Temperature:</source>
+        <source>内部温度:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/AutoPilotPlugins/APM/APMSafetyComponentSub.qml" line="310"/>
-        <source>Internal Pressure:</source>
+        <source>内部圧力:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -955,7 +955,7 @@
     </message>
     <message>
         <location filename="../src/AutoPilotPlugins/APM/APMSafetyComponentSub.qml" line="373"/>
-        <source>Warning: Turning off arming checks can lead to loss of Vehicle control.</source>
+        <source>Warning: アームのチェックをやめると期待のコントロールを失います</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1234,19 +1234,22 @@
     </message>
     <message>
         <location filename="../src/AutoPilotPlugins/APM/APMSensorsComponent.qml" line="260"/>
-        <source>- Green indicates a well functioning compass.
+        <source>- 緑色の時は方向を示す機能が良好です
+            Green indicates a well functioning compass.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/AutoPilotPlugins/APM/APMSensorsComponent.qml" line="261"/>
-        <source>- Yellow indicates a questionable compass or calibration.
+        <source>- 黄色の時は方向を示す機能に問題点があります
+            Yellow indicates a questionable compass or calibration.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/AutoPilotPlugins/APM/APMSensorsComponent.qml" line="262"/>
-        <source>- Red indicates a compass which should not be used.
+        <source>- 赤色の時は方向を示す機能が使えません
+            Red indicates a compass which should not be used.
 
 </source>
         <translation type="unfinished"></translation>
@@ -1268,12 +1271,14 @@
     </message>
     <message>
         <location filename="../src/AutoPilotPlugins/APM/APMSensorsComponent.qml" line="445"/>
-        <source>To level the horizon you need to place the vehicle in its level flight position and press Ok.</source>
+        <source>水平にするにはLevelFlightPostionに機体を置きOKを押してくださ
+       To level the horizon you need to place the vehicle in its level flight position and press Ok.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/AutoPilotPlugins/APM/APMSensorsComponent.qml" line="465"/>
-        <source>Pressure calibration will set the depth to zero at the current pressure reading.</source>
+        <source>Pressure　calibrationでは現在の深さでの圧力がゼロに設定されます。
+            Pressure calibration will set the depth to zero at the current pressure reading.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
